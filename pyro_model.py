@@ -50,7 +50,7 @@ def guide_2param(ques_id, stu_id, correct, n_ques = None, n_stu = None, subsampl
     if not n_ques: n_ques = torch.unique(ques_id).size()[0]
     if not n_stu: n_stu = torch.unique(stu_id).size()[0]
 
-    theta_loc = pyro.param('theta_loc', torch.randn(n_stu, dtype = torch.float64))
+    theta_loc = pyro.param('theta_loc', torch.randn(n_stu, dtype = torch.float64) / 100.)
     theta_scale = pyro.param('theta_scale', torch.ones(n_stu, dtype = torch.float64),
                                constraint=constraints.positive)
 
@@ -59,7 +59,7 @@ def guide_2param(ques_id, stu_id, correct, n_ques = None, n_stu = None, subsampl
     alpha_scale = pyro.param('alpha_scale', torch.ones(n_ques, dtype = torch.float64),
                                constraint=constraints.positive)
 
-    beta_loc = pyro.param('beta_loc', torch.randn(n_ques, dtype = torch.float64))
+    beta_loc = pyro.param('beta_loc', torch.randn(n_ques, dtype = torch.float64) / 100.)
     beta_scale = pyro.param('beta_scale', torch.ones(n_ques, dtype = torch.float64),
                                constraint=constraints.positive)
 
@@ -99,7 +99,7 @@ def guide_factorization(ques_id, stu_id, correct, n_latent, n_ques = None, n_stu
     if not n_ques: n_ques = torch.unique(ques_id).size()[0]
     if not n_stu: n_stu = torch.unique(stu_id).size()[0]
 
-    theta_loc = pyro.param('theta_loc', torch.randn(n_stu, n_latent, dtype = torch.float64))
+    theta_loc = pyro.param('theta_loc', torch.randn(n_stu, n_latent, dtype = torch.float64) / 100.)
     theta_scale = pyro.param('theta_scale', torch.ones(n_stu, n_latent, dtype = torch.float64),
                                constraint=constraints.positive)
 
@@ -108,7 +108,7 @@ def guide_factorization(ques_id, stu_id, correct, n_latent, n_ques = None, n_stu
     alpha_scale = pyro.param('alpha_scale', torch.ones(n_ques, n_latent, dtype = torch.float64),
                                constraint=constraints.positive)
 
-    beta_loc = pyro.param('beta_loc', torch.randn(n_ques, dtype = torch.float64))
+    beta_loc = pyro.param('beta_loc', torch.randn(n_ques, dtype = torch.float64) / 100.)
     beta_scale = pyro.param('beta_scale', torch.ones(n_ques, dtype = torch.float64),
                                constraint=constraints.positive)
 
@@ -195,7 +195,7 @@ def guide_hierarchical(ques_id, stu_id, correct, n_latent, ques_attrib, ques_att
         total_ques_n_latent += ques_n_latent
 
 
-    theta_loc = pyro.param('theta_loc', torch.randn(n_stu, n_latent + total_ques_n_latent, dtype = torch.float64))
+    theta_loc = pyro.param('theta_loc', torch.randn(n_stu, n_latent + total_ques_n_latent, dtype = torch.float64) / 100.)
     theta_scale = pyro.param('theta_scale', torch.ones(n_stu, n_latent + total_ques_n_latent, dtype = torch.float64),
                                constraint=constraints.positive)
 
@@ -204,7 +204,7 @@ def guide_hierarchical(ques_id, stu_id, correct, n_latent, ques_attrib, ques_att
     alpha_scale = pyro.param('alpha_scale', torch.ones(n_ques, n_latent, dtype = torch.float64),
                                constraint=constraints.positive)
 
-    beta_loc = pyro.param('beta_loc', torch.randn(n_ques, dtype = torch.float64))
+    beta_loc = pyro.param('beta_loc', torch.randn(n_ques, dtype = torch.float64) / 100.)
     beta_scale = pyro.param('beta_scale', torch.ones(n_ques, dtype = torch.float64),
                                constraint=constraints.positive)
 
