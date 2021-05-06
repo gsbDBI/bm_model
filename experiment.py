@@ -56,7 +56,10 @@ class BaseExperiment(object):
             logging.info('Creating directory {}.'.format(param_dir))
             os.makedirs(param_dir)
 
-        out_path = os.path.join(param_dir, '{model_name}_it{t:04d}.params'.format(model_name = model_name, t = t))
+        if t == 'final':
+            out_path = os.path.join(param_dir, '{model_name}_final.params'.format(model_name = model_name))
+        else:
+            out_path = os.path.join(param_dir, '{model_name}_it{t:04d}.params'.format(model_name = model_name, t = t))
 
         param_store = pyro.get_param_store()
         param_store.save(out_path)
@@ -98,6 +101,7 @@ class AutoStopExperiment(BaseExperiment):
                     break
 
             self.save_params(model_name, export_dir, t)
+            self.save_params(model_name, export_dir, t = 'final') # save a second copy for naming consistency
             self.save_record(self.record_dict[model_name], model_name, export_dir, t)
 
     def at_elbow_point(self, record, n_sample = 5, stop_threshold = 0.001):
